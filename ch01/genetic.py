@@ -45,16 +45,27 @@ def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
     random.seed()
     bestParent = _generate_parent(targetLen, geneSet, get_fitness)
     display(bestParent)
+
     if bestParent.Fitness >= optimalFitness:
         return bestParent
+
+    count = 0
     while True:
         child = _mutate(bestParent, geneSet, get_fitness)
+        count = count + 1
+
         if bestParent.Fitness >= child.Fitness:
+            # continue if no improvement in child generation
             continue
+
         display(child)
-        if child.Fitness >= optimalFitness:
-            return child
         bestParent = child
+
+        # print('JR log :: {:2d} :: {:2d} :: {}'.format(child.Fitness, optimalFitness, count))
+        count = 0
+
+        if child.Fitness >= optimalFitness:    
+            return child
 
 
 class Chromosome:

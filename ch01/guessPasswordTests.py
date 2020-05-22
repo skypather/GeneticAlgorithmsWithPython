@@ -36,14 +36,6 @@ def display(candidate, startTime):
 class GuessPasswordTests(unittest.TestCase):
     geneset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
 
-    def test_Hello_World(self):
-        target = "Hello World!"
-        self.guess_password(target)
-
-    def test_For_I_am_fearfully_and_wonderfully_made(self):
-        target = "For I am fearfully and wonderfully made."
-        self.guess_password(target)
-
     def guess_password(self, target):
         startTime = datetime.datetime.now()
 
@@ -58,11 +50,18 @@ class GuessPasswordTests(unittest.TestCase):
                                 self.geneset, fnDisplay)
         self.assertEqual(best.Genes, target)
 
+    def test_Hello_World(self):
+        target = "Hello World!"
+        self.guess_password(target)
+
+    def test_For_I_am_fearfully_and_wonderfully_made(self):
+        target = "For I am fearfully and wonderfully made."
+        self.guess_password(target)
+
     def test_Random(self):
         length = 150
         target = ''.join(random.choice(self.geneset)
                          for _ in range(length))
-
         self.guess_password(target)
 
     def test_benchmark(self):
