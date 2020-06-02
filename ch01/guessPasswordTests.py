@@ -27,6 +27,20 @@ def get_fitness(guess, target):
                if expected == actual)
 
 
+class MyFitness():
+    _Count = 0
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def get_fitness(cls, guess, target):
+        fitness = sum(1 for t, g in zip(target, guess) if t == g)
+        cls._Count = cls._Count + 1
+        # print('{} :: {} --> {}'.format(guess, target, fitness))
+        return fitness
+
+
 def display(candidate, startTime):
     timeDiff = datetime.datetime.now() - startTime
     print("{}\t{}\t{}".format(
@@ -40,7 +54,7 @@ class GuessPasswordTests(unittest.TestCase):
         startTime = datetime.datetime.now()
 
         def fnGetFitness(genes):
-            return get_fitness(genes, target)
+            return MyFitness.get_fitness(genes, target)
 
         def fnDisplay(candidate):
             display(candidate, startTime)
@@ -53,10 +67,12 @@ class GuessPasswordTests(unittest.TestCase):
     def test_Hello_World(self):
         target = "Hello World!"
         self.guess_password(target)
+        print('The function get_fitnett() is called ::', MyFitness._Count)
 
     def test_For_I_am_fearfully_and_wonderfully_made(self):
         target = "For I am fearfully and wonderfully made."
         self.guess_password(target)
+        print('The function get_fitnett() is called ::', MyFitness._Count)
 
     def test_Random(self):
         length = 150
@@ -66,6 +82,9 @@ class GuessPasswordTests(unittest.TestCase):
 
     def test_benchmark(self):
         genetic.Benchmark.run(self.test_Random)
+
+    def test_mybenchmark(self):
+        genetic.runBenchmark(self.test_Random)
 
 
 if __name__ == '__main__':
